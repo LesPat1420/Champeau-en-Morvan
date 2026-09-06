@@ -1,0 +1,60 @@
+{
+  "gestionnaire": "Communauté de communes de Saulieu-Morvan",
+  "telephone": "03 80 64 77 44",
+  "telephoneLien": "+33380647744",
+  "site": "https://saulieu-morvan.fr/",
+  "pageHoraires": "https://saulieu-morvan.fr/1/index.php/dechets/les-dechetteries",
+  "verifieLe": "2026-09-07",
+  "sites": [
+    {
+      "nom": "Déchèterie de Saulieu",
+      "acces": "À la sortie de Saulieu, à droite après la zone industrielle, avant l'intersection vers le hameau de Château-Benoist."
+    },
+    {
+      "nom": "Déchèterie de La Roche-en-Brenil",
+      "acces": "Dans le bourg, première rue à gauche en venant d'Avallon."
+    }
+  ],
+  "saisons": [
+    {
+      "id": "ete",
+      "libelle": "Horaires d'été",
+      "periode": "du 1er avril au 30 septembre",
+      "debut": "04-01",
+      "fin": "09-30",
+      "jours": {
+        "Lundi": [["14:00", "19:00"]],
+        "Mardi": [["14:00", "19:00"]],
+        "Mercredi": [["09:00", "12:00"]],
+        "Jeudi": [["09:00", "12:00"]],
+        "Vendredi": [["14:00", "19:00"]],
+        "Samedi": [["09:00", "12:00"]],
+        "Dimanche": []
+      }
+    },
+    {
+      "id": "hiver",
+      "libelle": "Horaires d'hiver",
+      "periode": "du 1er octobre au 31 mars",
+      "debut": "10-01",
+      "fin": "03-31",
+      "jours": {
+        "Lundi": [["14:00", "17:00"]],
+        "Mardi": [["14:00", "17:00"]],
+        "Mercredi": [["09:00", "12:00"]],
+        "Jeudi": [["09:00", "12:00"]],
+        "Vendredi": [["14:00", "17:00"]],
+        "Samedi": [["09:00", "12:00"], ["14:00", "17:00"]],
+        "Dimanche": []
+      }
+    }
+  ],
+  "acces": {
+    "particuliers": "Gratuit pour les habitants de la communauté de communes, dans la limite de 1 m³ par semaine, sur présentation d'un justificatif de domicile.",
+    "exterieurs": "Usagers hors communauté de communes : carte de 3 m³ à 45 €, sans limite de durée.",
+    "professionnels": "Professionnels du territoire : carte gratuite, 1 m³ gratuit par semaine puis environ 11 €/m³ supplémentaire."
+  },
+  "acceptes": "Bois, cartons, déchets verts, encombrants, appareils électriques et électroniques, lampes, produits chimiques, ferrailles, gravats, huiles, piles, pneus (selon conditions), textiles, articles de sport et de bricolage.",
+  "refuses": "Ordures ménagères, médicaments (à rapporter en pharmacie), déchets putrescibles, produits toxiques, inflammables ou corrosifs, amiante.",
+  "ressourcerie": "Un espace réemploi installé sur la déchèterie de Saulieu permet de déposer les objets encore en bon état pour qu'ils servent à nouveau."
+}

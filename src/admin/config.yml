@@ -88,6 +88,44 @@ collections:
           - { name: "message", label: "Message", widget: "text", required: false }
           - { name: "lien", label: "Lien « En savoir plus » (facultatif)", widget: "string", required: false }
 
+      - name: "dechetterie"
+        label: "Déchèterie (horaires et infos)"
+        file: "src/_data/dechetterie.json"
+        description: "Coordonnées, horaires été/hiver et conditions d'accès de la déchèterie. Le site affiche automatiquement la période en cours et l'état ouvert/fermé."
+        fields:
+          - { name: "gestionnaire", label: "Gestionnaire", widget: "string" }
+          - { name: "telephone", label: "Téléphone (affiché)", widget: "string" }
+          - { name: "telephoneLien", label: "Téléphone (format +33…)", widget: "string" }
+          - { name: "site", label: "Site web", widget: "string" }
+          - { name: "pageHoraires", label: "Page source des horaires", widget: "string" }
+          - { name: "verifieLe", label: "Horaires vérifiés le", widget: "date", format: "YYYY-MM-DD" }
+          - label: "Sites"
+            name: "sites"
+            widget: "list"
+            fields:
+              - { name: "nom", label: "Nom", widget: "string" }
+              - { name: "acces", label: "Accès / adresse", widget: "text" }
+          - label: "Saisons"
+            name: "saisons"
+            widget: "list"
+            fields:
+              - { name: "id", label: "Identifiant (ete / hiver)", widget: "string" }
+              - { name: "libelle", label: "Libellé", widget: "string" }
+              - { name: "periode", label: "Période (texte)", widget: "string" }
+              - { name: "debut", label: "Début (MM-JJ)", widget: "string" }
+              - { name: "fin", label: "Fin (MM-JJ)", widget: "string" }
+              - { name: "jours", label: "Horaires par jour (JSON)", widget: "text" }
+          - label: "Accès"
+            name: "acces"
+            widget: "object"
+            fields:
+              - { name: "particuliers", label: "Particuliers", widget: "text" }
+              - { name: "exterieurs", label: "Extérieurs", widget: "text" }
+              - { name: "professionnels", label: "Professionnels", widget: "text" }
+          - { name: "acceptes", label: "Déchets acceptés", widget: "text" }
+          - { name: "refuses", label: "Déchets refusés", widget: "text" }
+          - { name: "ressourcerie", label: "Réemploi / ressourcerie", widget: "text" }
+
       - name: "accueil"
         label: "Page d'accueil"
         file: "src/_data/accueil.json"
@@ -172,15 +210,6 @@ collections:
           - { name: "title", label: "Titre", widget: "string" }
           - { name: "permalink", label: "Adresse", widget: "hidden" }
           - { name: "layout", label: "Gabarit", widget: "hidden" }
-          - { name: "body", label: "Contenu", widget: "markdown" }
-      - name: "collecte"
-        label: "Vie de la commune — Collecte des déchets"
-        file: "src/vie-de-la-commune/collecte-des-dechets.md"
-        fields:
-          - { name: "title", label: "Titre", widget: "string" }
-          - { name: "permalink", label: "Adresse", widget: "hidden" }
-          - { name: "layout", label: "Gabarit", widget: "hidden" }
-          - { name: "fil", label: "Fil d'Ariane", widget: "hidden" }
           - { name: "body", label: "Contenu", widget: "markdown" }
       - name: "vie-associative"
         label: "Vie de la commune — Vie associative"

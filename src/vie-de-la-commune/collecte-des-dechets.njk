@@ -1,0 +1,76 @@
+---
+layout: layouts/page.njk
+title: "Collecte des déchets"
+permalink: "/vie-de-la-commune/collecte-des-dechets/"
+chapo: "Ordures ménagères, tri, encombrants et déchèterie."
+fil: [{ "titre": "Vie de la commune", "url": "/vie-de-la-commune/vie-associative/" }]
+---
+
+<h2>Ordures ménagères et tri</h2>
+
+<p>Le service de collecte et de traitement des déchets est assuré par la
+<strong>{{ dechetterie.gestionnaire }}</strong> — tél.
+<a href="tel:{{ dechetterie.telephoneLien }}">{{ dechetterie.telephone }}</a>,
+<a href="{{ dechetterie.site }}" target="_blank" rel="noopener">{{ dechetterie.site }}</a>.</p>
+
+<blockquote><p>Jours de collecte des bacs, emplacements des points d'apport volontaire (verre, papier), retrait des sacs de tri — à compléter avec la mairie.</p></blockquote>
+
+<h2>Déchèterie</h2>
+
+<div class="dechetterie">
+  <p class="dechetterie__statut" data-dechetterie-statut hidden></p>
+
+  {% for site in dechetterie.sites %}
+  <p><strong>{{ site.nom }}</strong><br>{{ site.acces }}</p>
+  {% endfor %}
+
+  <div class="dechetterie__saisons">
+  {% for saison in dechetterie.saisons %}
+    <div class="dechetterie__saison" data-saison="{{ saison.id }}">
+      <h3>{{ saison.libelle }} <span class="dechetterie__periode">({{ saison.periode }})</span></h3>
+      <table class="dechetterie__table">
+        <tbody>
+        {% for jour, plages in saison.jours %}
+          <tr>
+            <th scope="row">{{ jour }}</th>
+            <td>{% if plages | length %}{% for p in plages %}{{ p[0] }}&nbsp;–&nbsp;{{ p[1] }}{% if not loop.last %} · {% endif %}{% endfor %}{% else %}<span class="dechetterie__ferme">fermé</span>{% endif %}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endfor %}
+  </div>
+
+  <p class="dechetterie__source">
+    Horaires indicatifs, vérifiés le {{ dechetterie.verifieLe | dateFR }} d'après
+    <a href="{{ dechetterie.pageHoraires }}" target="_blank" rel="noopener">le site de la communauté de communes</a>.
+    En cas de doute, appelez le <a href="tel:{{ dechetterie.telephoneLien }}">{{ dechetterie.telephone }}</a>.
+  </p>
+</div>
+
+<script type="application/json" id="dechetterie-data">{{ dechetterie | dump | safe }}</script>
+
+<h3>Accès</h3>
+<ul>
+  <li><strong>Particuliers :</strong> {{ dechetterie.acces.particuliers }}</li>
+  <li><strong>Extérieurs :</strong> {{ dechetterie.acces.exterieurs }}</li>
+  <li><strong>Professionnels :</strong> {{ dechetterie.acces.professionnels }}</li>
+</ul>
+
+<h3>Déchets acceptés</h3>
+<p>{{ dechetterie.acceptes }}</p>
+
+<h3>Déchets refusés</h3>
+<p>{{ dechetterie.refuses }}</p>
+
+<h3>Réemploi</h3>
+<p>{{ dechetterie.ressourcerie }}</p>
+
+<h2>Encombrants</h2>
+
+<blockquote><p>Modalités de collecte des encombrants (sur inscription auprès de la communauté de communes) à compléter avec la mairie.</p></blockquote>
+
+<div class="encadre">
+<p>En cas de doute sur le tri : <a href="https://www.citeo.com/le-mag/le-tri-cest-simple" target="_blank" rel="noopener">guide du tri Citeo</a>.</p>
+</div>

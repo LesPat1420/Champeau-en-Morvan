@@ -252,6 +252,29 @@ h1, h2, h3, h4 { font-family: var(--police-titre); line-height: 1.25; color: var
 .galerie img { aspect-ratio: 1; object-fit: cover; transition: transform .2s; }
 .galerie a:hover img { transform: scale(1.05); }
 
+/* Déchèterie */
+.dechetterie { margin: 1.5rem 0; }
+.dechetterie__statut {
+  display: inline-block; font-weight: 600; font-size: .95rem;
+  padding: .4rem .8rem; border-radius: 999px; margin: 0 0 1rem;
+}
+.dechetterie__statut.est-ouvert { background: #e3f1e1; color: #2f6b34; }
+.dechetterie__statut.est-ferme { background: #f6e4e0; color: #9c3b28; }
+.dechetterie__saisons { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.dechetterie__saison { border: 1px solid var(--pierre-bordure); border-radius: var(--rayon); padding: .4rem 1rem 1rem; opacity: .6; }
+.dechetterie__saison.est-active { opacity: 1; border-color: var(--vert); box-shadow: var(--ombre); }
+.dechetterie__saison h3 { margin-top: 1rem; }
+.dechetterie__periode { font-weight: 400; font-size: .85rem; color: var(--texte-doux); }
+.dechetterie__badge {
+  font-family: var(--police-texte); font-weight: 600; font-size: .72rem;
+  background: var(--vert); color: #fff; padding: .15rem .5rem; border-radius: 999px;
+  vertical-align: middle;
+}
+.dechetterie__table { margin: .6rem 0 0; font-size: .95rem; }
+.dechetterie__table th { background: transparent; font-weight: 600; white-space: nowrap; }
+.dechetterie__ferme { color: var(--texte-doux); }
+.dechetterie__source { font-size: .85rem; color: var(--texte-doux); margin-top: 1rem; }
+
 /* Liste de documents (PDF) */
 .docs { list-style: none; margin: 1.5rem 0; padding: 0; display: grid; gap: .6rem; }
 .docs li { margin: 0; }
