@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lespat1420.github.io/Champeau-en-Morvan/sitemap.xml
