@@ -1,0 +1,20 @@
+{
+  "name": "site-mairie-saint-agnan-en-morvan",
+  "version": "1.0.0",
+  "description": "Site officiel de la commune de Saint-Agnan-en-Morvan (Nièvre)",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "eleventy --serve --quiet",
+    "build": "eleventy",
+    "clean": "rm -rf _site"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-img": "^6.0.0",
+    "@11ty/eleventy-navigation": "^0.3.5",
+    "luxon": "^3.5.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-attrs": "^4.3.1"
+  }
+}

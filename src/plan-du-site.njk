@@ -1,0 +1,21 @@
+---
+layout: layouts/page.njk
+title: "Plan du site"
+permalink: "/plan-du-site/"
+---
+
+<ul class="plan-site">
+{%- for item in navigation %}
+  <li>
+    <a href="{{ item.url }}">{{ item.titre }}</a>
+    {%- if item.enfants %}
+    <ul>
+      {%- for e in item.enfants %}<li><a href="{{ e.url }}">{{ e.titre }}</a></li>{% endfor %}
+    </ul>
+    {%- endif %}
+  </li>
+{%- endfor %}
+  <li><a href="/contact/">Contact</a></li>
+  <li><a href="/mentions-legales/">Mentions légales</a></li>
+  <li><a href="/accessibilite/">Accessibilité</a></li>
+</ul>

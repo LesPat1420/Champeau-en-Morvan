@@ -1,0 +1,33 @@
+<header class="entete" id="header">
+  <div class="conteneur entete__inner">
+    <a href="/" class="entete__marque" aria-label="Accueil – {{ site.nomLong }}">
+      <span class="entete__nom">
+        <span class="entete__nom-ligne1">Champeau</span>
+        <span class="entete__nom-ligne2">en-Morvan</span>
+      </span>
+    </a>
+
+    <button class="entete__burger" type="button" aria-expanded="false" aria-controls="menu-principal" data-menu-toggle>
+      <span class="entete__burger-barre" aria-hidden="true"></span>
+      <span class="visuellement-cache">Ouvrir le menu</span>
+    </button>
+
+    <nav class="menu" id="menu-principal" aria-label="Menu principal">
+      <ul class="menu__liste">
+        {%- for item in navigation %}
+        <li class="menu__item{% if item.enfants %} menu__item--parent{% endif %}">
+          <a href="{{ item.url }}" class="menu__lien{% if page.url == item.url or (item.url != '/' and page.url.startsWith(item.url)) %} est-actif{% endif %}">{{ item.titre }}</a>
+          {%- if item.enfants %}
+          <button class="menu__deplier" type="button" aria-expanded="false" aria-label="Déplier {{ item.titre }}">+</button>
+          <ul class="menu__sous-liste">
+            {%- for enfant in item.enfants %}
+            <li><a href="{{ enfant.url }}" class="menu__sous-lien{% if page.url == enfant.url %} est-actif{% endif %}">{{ enfant.titre }}</a></li>
+            {%- endfor %}
+          </ul>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,52 @@
+<footer class="pied">
+  <div class="conteneur pied__grille">
+    <div class="pied__bloc">
+      <h2 class="pied__titre">Mairie de {{ site.nom }}</h2>
+      <address class="pied__adresse">
+        {{ site.mairie.adresse }}<br>
+        {{ site.mairie.codePostalVille }}<br>
+        Tél. <a href="tel:{{ site.mairie.telephoneLien }}">{{ site.mairie.telephone }}</a><br>
+        <a href="mailto:{{ site.mairie.email }}">{{ site.mairie.email }}</a>
+      </address>
+    </div>
+
+    <div class="pied__bloc">
+      <h2 class="pied__titre">Découvrir</h2>
+      <ul class="pied__liens">
+        <li><a href="/la-commune/">La commune</a></li>
+        <li><a href="/histoire/">Histoire &amp; patrimoine</a></li>
+        <li><a href="/vie-de-la-commune/vie-associative/">Vie associative</a></li>
+        <li><a href="/vie-de-la-commune/tourisme/">Tourisme &amp; randonnée</a></li>
+        <li><a href="/actualites/">Actualités</a></li>
+      </ul>
+    </div>
+
+    <div class="pied__bloc">
+      <h2 class="pied__titre">Démarches</h2>
+      <ul class="pied__liens">
+        <li><a href="/mairie/formalites/">Formalités administratives</a></li>
+        <li><a href="https://www.service-public.fr/particuliers/vosdroits/N19810" rel="noopener" target="_blank">Papiers – Citoyenneté</a></li>
+        <li><a href="/mairie/comptes-rendus/">Comptes rendus du conseil</a></li>
+        <li><a href="/mairie/bulletins/">Bulletins municipaux</a></li>
+        <li><a href="/contact/">Nous contacter</a></li>
+      </ul>
+    </div>
+
+    <div class="pied__bloc">
+      <h2 class="pied__titre">Le Parc du Morvan</h2>
+      <p>Champeau-en-Morvan est une commune du Parc naturel régional du Morvan.</p>
+      <a class="pied__bouton" href="https://www.parcdumorvan.org/" rel="noopener" target="_blank">parcdumorvan.org</a>
+    </div>
+  </div>
+
+  <div class="pied__bas">
+    <div class="conteneur pied__bas-inner">
+      <p>&copy; {{ "now" | annee }} {{ site.nomLong }}. Images : droits réservés à leurs propriétaires respectifs.</p>
+      <ul class="pied__legal">
+        <li><a href="/mentions-legales/">Mentions légales</a></li>
+        <li><a href="/accessibilite/">Accessibilité</a></li>
+        <li><a href="/plan-du-site/">Plan du site</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

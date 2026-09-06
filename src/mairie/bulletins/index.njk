@@ -1,0 +1,23 @@
+---
+layout: layouts/page.njk
+title: "Bulletins municipaux"
+permalink: "/mairie/bulletins/"
+chapo: "Le bulletin municipal de Champeau-en-Morvan, à télécharger au format PDF."
+fil: [{ "titre": "Mairie", "url": "/mairie/renseignements/" }]
+---
+
+{%- if collections.bulletins | length %}
+<ul class="docs">
+{%- for b in collections.bulletins %}
+  <li><a href="{{ b.data.document }}" target="_blank" rel="noopener">{{ b.data.title }}</a></li>
+{%- endfor %}
+</ul>
+{%- else %}
+<div class="encadre">
+  <p>Les bulletins et informations municipales seront proposés ici au téléchargement dès qu'ils seront disponibles.</p>
+</div>
+{%- endif %}
+
+<div class="encadre">
+  <p>Retrouvez aussi les informations de la commune dans les <a href="/actualites/">actualités</a> et sur les panneaux d'affichage.</p>
+</div>

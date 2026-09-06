@@ -1,0 +1,35 @@
+---
+layout: layouts/page.njk
+title: "Comptes rendus du conseil municipal"
+permalink: "/mairie/comptes-rendus/"
+chapo: "Délibérations, procès-verbaux et comptes rendus des séances du conseil municipal."
+fil: [{ "titre": "Mairie", "url": "/mairie/renseignements/" }]
+---
+
+{%- if collections.comptesRendus | length %}
+<p>Les documents sont classés du plus récent au plus ancien. Ils s'ouvrent au format PDF.</p>
+
+{%- set annee = "" -%}
+{%- for cr in collections.comptesRendus %}
+  {%- set a = cr.data.dateSeance | annee -%}
+  {%- if a != annee %}
+    {%- if not loop.first %}</ul>{% endif %}
+    <h2>{{ a }}</h2>
+    <ul class="docs">
+    {%- set annee = a -%}
+  {%- endif %}
+  <li>
+    <a href="{{ cr.data.document }}" target="_blank" rel="noopener">{{ cr.data.title }}</a>
+    {%- if cr.data.annexe %} <a href="{{ cr.data.annexe }}" target="_blank" rel="noopener" class="docs__meta">+ annexe</a>{% endif %}
+  </li>
+  {%- if loop.last %}</ul>{% endif %}
+{%- endfor %}
+{%- else %}
+<div class="encadre">
+  <p>Les comptes rendus des séances du conseil seront mis en ligne ici, au format PDF, dès que la mairie le souhaitera. En attendant, ils sont consultables en mairie et affichés sur les panneaux d'affichage de la commune.</p>
+</div>
+{%- endif %}
+
+<div class="encadre">
+  <p>Pour toute demande de document non publié ici, contactez la <a href="/mairie/renseignements/">mairie</a>.</p>
+</div>

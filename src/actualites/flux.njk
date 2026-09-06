@@ -1,0 +1,24 @@
+---
+permalink: /actualites/flux.xml
+eleventyExcludeFromCollections: true
+layout: null
+tags: []
+---
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Actualités – {{ site.nomLong }}</title>
+    <link>{{ site.url }}/actualites/</link>
+    <description>{{ site.description }}</description>
+    <language>fr</language>
+    {%- for actu in collections.actualites | recent(20) %}
+    <item>
+      <title>{{ actu.data.title | escape }}</title>
+      <link>{{ site.url }}{{ actu.url }}</link>
+      <guid>{{ site.url }}{{ actu.url }}</guid>
+      <pubDate>{{ actu.data.date | dateISO }}</pubDate>
+      {%- if actu.data.chapo %}<description>{{ actu.data.chapo | escape }}</description>{% endif %}
+    </item>
+    {%- endfor %}
+  </channel>
+</rss>

@@ -1,0 +1,31 @@
+---
+layout: layouts/page.njk
+title: "Actualités"
+permalink: "/actualites/"
+chapo: "Les informations, arrêtés et événements de la commune de Champeau-en-Morvan."
+eleventyExcludeFromCollections: true
+---
+
+{%- if collections.actualites | length %}
+<div class="actus">
+{%- for actu in collections.actualites %}
+  <article class="actu-carte">
+    {%- if actu.data.image %}
+    <img class="actu-carte__img" src="{{ actu.data.image }}" alt="{{ actu.data.imageAlt or actu.data.title }}" loading="lazy">
+    {%- endif %}
+    <div class="actu-carte__corps">
+      <p class="actu-carte__date">{{ actu.data.date | dateFR }}</p>
+      <h2 class="actu-carte__titre"><a href="{{ actu.url }}">{{ actu.data.title }}</a></h2>
+      {%- if actu.data.chapo %}<p class="actu-carte__extrait">{{ actu.data.chapo }}</p>{% endif %}
+      <span class="actu-carte__lien" aria-hidden="true">Lire la suite →</span>
+    </div>
+  </article>
+{%- endfor %}
+</div>
+{%- else %}
+<div class="encadre">
+  <p>Les actualités de la commune seront publiées ici. Cette rubrique sera alimentée par la mairie une fois le site adopté.</p>
+</div>
+{%- endif %}
+
+<p style="margin-top:2rem"><a href="/mairie/bulletins/">Voir aussi les bulletins municipaux</a>.</p>

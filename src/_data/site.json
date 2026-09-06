@@ -1,0 +1,22 @@
+{
+  "nom": "Champeau-en-Morvan",
+  "nomLong": "Commune de Champeau-en-Morvan",
+  "codePostal": "21210",
+  "departement": "Côte-d'Or",
+  "region": "Bourgogne-Franche-Comté",
+  "url": "https://lespat1420.github.io/Champeau-en-Morvan",
+  "langue": "fr",
+  "description": "Site officiel de la commune de Champeau-en-Morvan (21210), en Côte-d'Or, au cœur du Parc naturel régional du Morvan. Informations municipales, démarches, actualités et vie de la commune.",
+  "mairie": {
+    "adresse": "Le Village",
+    "codePostalVille": "21210 Champeau-en-Morvan",
+    "telephone": "03 80 64 10 76",
+    "telephoneLien": "+33380641076",
+    "email": "mairie.champeauenmorvan@wanadoo.fr",
+    "horaires": "Lundi 15 h 30 – 18 h 30 · Mercredi 9 h – 12 h",
+    "maire": "David Boussard",
+    "mandat": "2026-2032"
+  },
+  "reseaux": {},
+  "geo": { "lat": 47.2739, "lon": 4.1189 }
+}

@@ -1,0 +1,202 @@
+# Configuration de l'interface d'édition (Sveltia CMS / Decap CMS)
+# Documentation : https://github.com/sveltia/sveltia-cms  —  https://decapcms.org/docs/
+
+backend:
+  name: github
+  repo: LesPat1420/Champeau-en-Morvan   # <-- à remplacer : compte/organisation + nom du dépôt
+  branch: main
+  # Sveltia CMS gère l'authentification GitHub. Si vous utilisez Decap CMS,
+  # renseignez base_url avec l'URL de votre proxy OAuth (voir README, étape 4).
+  # base_url: https://VOTRE-PROXY-OAUTH.workers.dev
+
+# Where uploaded media go
+media_folder: "src/assets/img/uploads"
+public_folder: "/assets/img/uploads"
+
+locale: "fr"
+
+# Éditeur en français
+i18n: false
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  # ---------------------------------------------------------------
+  - name: "actualites"
+    label: "Actualités"
+    label_singular: "actualité"
+    folder: "src/actualites"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    sortable_fields: ["date", "title"]
+    summary: "{{date | date('DD/MM/YYYY')}} — {{title}}"
+    fields:
+      - { name: "title", label: "Titre", widget: "string" }
+      - { name: "date", label: "Date", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false, picker_utc: true }
+      - { name: "chapo", label: "Résumé (1 à 2 phrases)", widget: "text", required: false }
+      - { name: "image", label: "Image de une", widget: "image", required: false }
+      - { name: "imageAlt", label: "Description de l'image", widget: "string", required: false }
+      - { name: "imageLegende", label: "Légende de l'image", widget: "string", required: false }
+      - { name: "body", label: "Contenu", widget: "markdown" }
+
+  # ---------------------------------------------------------------
+  - name: "comptes_rendus"
+    label: "Comptes rendus & procès-verbaux"
+    label_singular: "compte rendu"
+    folder: "src/mairie/comptes-rendus"
+    create: true
+    identifier_field: "title"
+    filter: { field: "document", exists: true }
+    sortable_fields: ["dateSeance", "title"]
+    summary: "{{dateSeance | date('DD/MM/YYYY')}} — {{title}}"
+    fields:
+      - { name: "title", label: "Intitulé", widget: "string" }
+      - { name: "dateSeance", label: "Date de la séance", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false, picker_utc: true }
+      - { name: "document", label: "Document (PDF)", widget: "file" }
+      - { name: "annexe", label: "Annexe (PDF, facultatif)", widget: "file", required: false }
+      - { name: "permalink", label: "(ne pas modifier)", widget: "hidden", default: false }
+
+  # ---------------------------------------------------------------
+  - name: "bulletins"
+    label: "Bulletins municipaux"
+    label_singular: "bulletin"
+    folder: "src/mairie/bulletins"
+    create: true
+    identifier_field: "title"
+    sortable_fields: ["dateParution", "title"]
+    summary: "{{dateParution | date('MM/YYYY')}} — {{title}}"
+    fields:
+      - { name: "title", label: "Titre", widget: "string" }
+      - { name: "dateParution", label: "Date de parution", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false, picker_utc: true }
+      - { name: "document", label: "Document (PDF)", widget: "file" }
+      - { name: "permalink", label: "(ne pas modifier)", widget: "hidden", default: false }
+
+  # ---------------------------------------------------------------
+  - name: "reglages"
+    label: "Réglages du site"
+    files:
+      - name: "alerte"
+        label: "Bandeau d'alerte"
+        file: "src/_data/alerte.json"
+        description: "Bandeau rouge affiché en haut de toutes les pages (fermeture mairie, alerte météo…)."
+        fields:
+          - { name: "active", label: "Afficher le bandeau", widget: "boolean", default: false }
+          - { name: "titre", label: "Titre (en gras)", widget: "string", required: false }
+          - { name: "message", label: "Message", widget: "text", required: false }
+          - { name: "lien", label: "Lien « En savoir plus » (facultatif)", widget: "string", required: false }
+
+      - name: "accueil"
+        label: "Page d'accueil"
+        file: "src/_data/accueil.json"
+        fields:
+          - { name: "heroSurTitre", label: "Sur-titre", widget: "string" }
+          - { name: "heroTitre", label: "Titre principal", widget: "string" }
+          - { name: "heroAccroche", label: "Phrase d'accroche", widget: "text" }
+          - name: "diapos"
+            label: "Images du bandeau (diaporama)"
+            widget: "list"
+            fields:
+              - { name: "image", label: "Image", widget: "image" }
+              - { name: "alt", label: "Description", widget: "string" }
+          - name: "accesRapides"
+            label: "Accès rapides"
+            widget: "list"
+            fields:
+              - { name: "icone", label: "Icône (emoji)", widget: "string" }
+              - { name: "titre", label: "Titre", widget: "string" }
+              - { name: "desc", label: "Description", widget: "string" }
+              - { name: "url", label: "Lien", widget: "string" }
+
+      - name: "coordonnees"
+        label: "Coordonnées de la mairie"
+        file: "src/_data/site.json"
+        fields:
+          - { name: "nom", label: "Nom court", widget: "hidden" }
+          - { name: "nomLong", label: "Nom complet", widget: "hidden" }
+          - { name: "codePostal", label: "Code postal", widget: "hidden" }
+          - { name: "departement", label: "Département", widget: "hidden" }
+          - { name: "region", label: "Région", widget: "hidden" }
+          - { name: "url", label: "Adresse du site", widget: "hidden" }
+          - { name: "langue", label: "Langue", widget: "hidden" }
+          - { name: "description", label: "Description (référencement)", widget: "text" }
+          - name: "mairie"
+            label: "Mairie"
+            widget: "object"
+            fields:
+              - { name: "adresse", label: "Adresse", widget: "string" }
+              - { name: "codePostalVille", label: "Code postal et ville", widget: "string" }
+              - { name: "telephone", label: "Téléphone (affiché)", widget: "string" }
+              - { name: "telephoneLien", label: "Téléphone (format +33…)", widget: "string" }
+              - { name: "email", label: "Courriel", widget: "string" }
+              - { name: "horaires", label: "Note sur les horaires", widget: "string" }
+              - { name: "maire", label: "Maire", widget: "string" }
+              - { name: "mandat", label: "Mandat", widget: "string" }
+          - { name: "reseaux", label: "Réseaux", widget: "hidden", default: {} }
+          - name: "geo"
+            label: "Coordonnées GPS"
+            widget: "object"
+            fields:
+              - { name: "lat", label: "Latitude", widget: "number", value_type: "float" }
+              - { name: "lon", label: "Longitude", widget: "number", value_type: "float" }
+
+  # ---------------------------------------------------------------
+  - name: "pages"
+    label: "Pages courantes"
+    description: "Contenu des principales pages informatives."
+    files:
+      - name: "renseignements"
+        label: "Mairie — Renseignements"
+        file: "src/mairie/renseignements.md"
+        fields:
+          - { name: "title", label: "Titre", widget: "string" }
+          - { name: "permalink", label: "Adresse", widget: "hidden" }
+          - { name: "layout", label: "Gabarit", widget: "hidden" }
+          - { name: "chapo", label: "Chapô", widget: "text", required: false }
+          - { name: "body", label: "Contenu", widget: "markdown" }
+      - name: "equipe"
+        label: "Mairie — Équipe municipale"
+        file: "src/mairie/equipe-municipale.md"
+        fields:
+          - { name: "title", label: "Titre", widget: "string" }
+          - { name: "permalink", label: "Adresse", widget: "hidden" }
+          - { name: "layout", label: "Gabarit", widget: "hidden" }
+          - { name: "chapo", label: "Chapô", widget: "text", required: false }
+          - { name: "body", label: "Contenu", widget: "markdown" }
+      - name: "objets-trouves"
+        label: "Pratique — Objets trouvés"
+        file: "src/pratique/objets-trouves.md"
+        fields:
+          - { name: "title", label: "Titre", widget: "string" }
+          - { name: "permalink", label: "Adresse", widget: "hidden" }
+          - { name: "layout", label: "Gabarit", widget: "hidden" }
+          - { name: "body", label: "Contenu", widget: "markdown" }
+      - name: "collecte"
+        label: "Vie de la commune — Collecte des déchets"
+        file: "src/vie-de-la-commune/collecte-des-dechets.md"
+        fields:
+          - { name: "title", label: "Titre", widget: "string" }
+          - { name: "permalink", label: "Adresse", widget: "hidden" }
+          - { name: "layout", label: "Gabarit", widget: "hidden" }
+          - { name: "fil", label: "Fil d'Ariane", widget: "hidden" }
+          - { name: "body", label: "Contenu", widget: "markdown" }
+      - name: "vie-associative"
+        label: "Vie de la commune — Vie associative"
+        file: "src/vie-de-la-commune/vie-associative.md"
+        fields:
+          - { name: "title", label: "Titre", widget: "string" }
+          - { name: "permalink", label: "Adresse", widget: "hidden" }
+          - { name: "layout", label: "Gabarit", widget: "hidden" }
+          - { name: "fil", label: "Fil d'Ariane", widget: "hidden" }
+          - { name: "body", label: "Contenu", widget: "markdown" }
+      - name: "activites-economiques"
+        label: "Vie de la commune — Activités économiques"
+        file: "src/vie-de-la-commune/activites-economiques.md"
+        fields:
+          - { name: "title", label: "Titre", widget: "string" }
+          - { name: "permalink", label: "Adresse", widget: "hidden" }
+          - { name: "layout", label: "Gabarit", widget: "hidden" }
+          - { name: "fil", label: "Fil d'Ariane", widget: "hidden" }
+          - { name: "body", label: "Contenu", widget: "markdown" }

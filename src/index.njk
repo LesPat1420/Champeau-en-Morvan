@@ -1,0 +1,104 @@
+---
+layout: layouts/base.njk
+title: false
+permalink: /
+description: "Site de la commune de Champeau-en-Morvan (21210), en Côte-d'Or, au cœur du Parc naturel régional du Morvan : mairie, démarches, actualités, conseil municipal, histoire et vie de la commune."
+---
+
+<section class="hero">
+  <div class="hero__diapos" aria-hidden="true">
+    {%- for d in accueil.diapos %}
+    <div class="hero__diapo{% if loop.first %} est-active{% endif %}" style="background-image:url('{{ d.image | url }}')"></div>
+    {%- endfor %}
+  </div>
+  <div class="conteneur hero__contenu">
+    <p class="hero__sur-titre">{{ accueil.heroSurTitre }}</p>
+    <h1 class="hero__titre">{{ accueil.heroTitre }}</h1>
+    <p class="hero__accroche">{{ accueil.heroAccroche }}</p>
+    <div class="hero__actions">
+      <a class="bouton bouton--primaire" href="/mairie/renseignements/">Contacter la mairie</a>
+      <a class="bouton bouton--clair" href="/actualites/">Voir les actualités</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <h2 class="section__titre">Accès rapides</h2>
+    <p class="section__intro">Les informations et démarches les plus consultées.</p>
+    <div class="acces">
+      {%- for a in accueil.accesRapides %}
+      <a class="acces__carte" href="{{ a.url }}">
+        <span class="acces__icone" aria-hidden="true">{{ a.icone }}</span>
+        <span class="acces__titre">{{ a.titre }}</span>
+        <span class="acces__desc">{{ a.desc }}</span>
+      </a>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--pierre">
+  <div class="conteneur">
+    <div class="section__tete">
+      <div>
+        <h2 class="section__titre">Actualités</h2>
+        <p class="section__intro">La vie de la commune, les arrêtés et les événements.</p>
+      </div>
+      <a class="bouton bouton--ligne" href="/actualites/">Toutes les actualités</a>
+    </div>
+    {%- set actus = collections.actualites | recent(3) %}
+    {%- if actus | length %}
+    <div class="actus">
+      {%- for actu in actus %}
+      <article class="actu-carte">
+        {%- if actu.data.image %}
+        <img class="actu-carte__img" src="{{ actu.data.image }}" alt="{{ actu.data.imageAlt or actu.data.title }}" loading="lazy">
+        {%- endif %}
+        <div class="actu-carte__corps">
+          <p class="actu-carte__date">{{ actu.data.date | dateFR }}</p>
+          <h3 class="actu-carte__titre"><a href="{{ actu.url }}">{{ actu.data.title }}</a></h3>
+          {%- if actu.data.chapo %}<p class="actu-carte__extrait">{{ actu.data.chapo }}</p>{% endif %}
+          <span class="actu-carte__lien" aria-hidden="true">Lire la suite →</span>
+        </div>
+      </article>
+      {%- endfor %}
+    </div>
+    {%- else %}
+    <p class="section__intro">Les actualités seront publiées ici prochainement.</p>
+    {%- endif %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <h2 class="section__titre">Infos pratiques</h2>
+    <div class="infos">
+      <div class="infos__carte">
+        <dl>
+          <div class="infos__ligne"><dt>Adresse</dt><dd>{{ site.mairie.adresse }}<br>{{ site.mairie.codePostalVille }}</dd></div>
+          <div class="infos__ligne"><dt>Téléphone</dt><dd><a href="tel:{{ site.mairie.telephoneLien }}">{{ site.mairie.telephone }}</a></dd></div>
+          <div class="infos__ligne"><dt>Courriel</dt><dd><a href="mailto:{{ site.mairie.email }}">{{ site.mairie.email }}</a></dd></div>
+          <div class="infos__ligne"><dt>Maire</dt><dd>{{ site.mairie.maire }} <span class="actu-carte__date">(mandat {{ site.mairie.mandat }})</span></dd></div>
+          <div class="infos__ligne"><dt>Horaires</dt><dd>{{ site.mairie.horaires }}</dd></div>
+        </dl>
+        <p style="margin-top:1rem"><a class="bouton bouton--primaire" href="/contact/">Nous écrire</a></p>
+      </div>
+      <iframe class="carte-osm" title="Carte de Champeau-en-Morvan"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=4.02%2C47.23%2C4.22%2C47.32&amp;layer=mapnik&amp;marker={{ site.geo.lat }}%2C{{ site.geo.lon }}"
+        loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="section section--pierre">
+  <div class="conteneur">
+    <h2 class="section__titre">Découvrir Champeau-en-Morvan</h2>
+    <div class="acces">
+      <a class="acces__carte" href="/la-commune/"><span class="acces__icone">🏘️</span><span class="acces__titre">La commune</span><span class="acces__desc">Hameaux, paysages et communes voisines</span></a>
+      <a class="acces__carte" href="/histoire/"><span class="acces__icone">📜</span><span class="acces__titre">Histoire &amp; patrimoine</span><span class="acces__desc">Église Saint-Léger, toponymie, le Tacot du Morvan</span></a>
+      <a class="acces__carte" href="/vie-de-la-commune/tourisme/"><span class="acces__icone">🥾</span><span class="acces__titre">Tourisme &amp; randonnée</span><span class="acces__desc">Sentiers du Morvan et sites des alentours</span></a>
+      <a class="acces__carte" href="/pratique/liens/"><span class="acces__icone">🔗</span><span class="acces__titre">Liens utiles</span><span class="acces__desc">Services publics et partenaires de la commune</span></a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+{%- if alerte.active -%}
+<div class="alerte" role="alert" id="alerte-info">
+  <div class="conteneur alerte__inner">
+    <span class="alerte__icone" aria-hidden="true">!</span>
+    <p class="alerte__texte">
+      {%- if alerte.titre %}<strong>{{ alerte.titre }}</strong> {% endif -%}
+      {{ alerte.message }}
+      {%- if alerte.lien %} <a href="{{ alerte.lien }}">En savoir plus</a>{% endif -%}
+    </p>
+    <button type="button" class="alerte__fermer" aria-label="Fermer l'alerte" data-fermer-alerte>&times;</button>
+  </div>
+</div>
+{%- endif -%}

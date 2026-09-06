@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+---
+<article class="page page--actu">
+  <header class="page__entete">
+    <div class="conteneur">
+      <nav class="fil-ariane" aria-label="Fil d'Ariane">
+        <ol>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/actualites/">Actualités</a></li>
+          <li aria-current="page">{{ title }}</li>
+        </ol>
+      </nav>
+      <p class="actu__date"><time datetime="{{ date | dateISO }}">{{ date | dateFR }}</time></p>
+      <h1 class="page__titre">{{ title }}</h1>
+    </div>
+  </header>
+
+  <div class="conteneur page__corps">
+    {% if image %}
+    <figure class="actu__media">
+      <img src="{{ image }}" alt="{{ imageAlt or title }}" loading="lazy">
+      {% if imageLegende %}<figcaption>{{ imageLegende }}</figcaption>{% endif %}
+    </figure>
+    {% endif %}
+    <div class="prose">
+      {{ content | safe }}
+    </div>
+    <p class="actu__retour"><a href="/actualites/">&larr; Toutes les actualités</a></p>
+  </div>
+</article>

@@ -1,0 +1,14 @@
+{
+  "heroSurTitre": "Côte-d'Or · Parc naturel régional du Morvan",
+  "heroTitre": "Bienvenue à Champeau-en-Morvan",
+  "heroAccroche": "Une commune rurale du Haut-Morvan, entre forêts, prairies et villages.",
+  "diapos": [],
+  "accesRapides": [
+    { "icone": "🕑", "titre": "Horaires & contact", "desc": "Joindre la mairie et connaître les horaires d'ouverture", "url": "/mairie/renseignements/" },
+    { "icone": "📄", "titre": "Démarches", "desc": "Carte d'identité, urbanisme, état civil…", "url": "/mairie/formalites/" },
+    { "icone": "📢", "titre": "Actualités", "desc": "Les dernières informations de la commune", "url": "/actualites/" },
+    { "icone": "🗑️", "titre": "Déchets", "desc": "Collecte et déchetterie", "url": "/vie-de-la-commune/collecte-des-dechets/" },
+    { "icone": "📋", "titre": "Conseil municipal", "desc": "Comptes rendus des séances", "url": "/mairie/comptes-rendus/" },
+    { "icone": "🥾", "titre": "Découvrir", "desc": "Patrimoine, tourisme et randonnée", "url": "/vie-de-la-commune/tourisme/" }
+  ]
+}
