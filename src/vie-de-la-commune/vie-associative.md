@@ -6,6 +6,11 @@ chapo: "Les associations et le comité des fêtes de Champeau-en-Morvan."
 fil: [{ "titre": "Vie de la commune", "url": "/vie-de-la-commune/vie-associative/" }]
 ---
 
+![Journée de plessage (« pléchage ») des haies dans le Morvan.](/assets/img/plechage.jpg){.image-large}
+<span class="page__source">Photo : Élisabeth Berthier-Bizouard.</span>
+
+Dans le Morvan, l'entretien du bocage passe encore par le **plessage** des haies — les « plécheux » tressent les branches vives pour reformer une clôture naturelle. Ces chantiers, souvent collectifs, réunissent habitants et bénévoles.
+
 ## Les associations de la commune
 
 > *Liste à compléter avec la mairie : comité des fêtes, association de chasse, club des aînés, association de sauvegarde du patrimoine…*

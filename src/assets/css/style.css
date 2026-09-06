@@ -243,6 +243,8 @@ h1, h2, h3, h4 { font-family: var(--police-titre); line-height: 1.25; color: var
 .prose th { background: var(--bleu-clair); }
 .prose figure { margin: 1.6rem 0; }
 .prose figcaption { font-size: .88rem; color: var(--texte-doux); margin-top: .4rem; }
+.prose img.image-large { width: 100%; max-width: none; }
+.page__source { display: block; font-size: .82rem; color: var(--texte-doux); margin-top: -.9rem; }
 
 /* Galerie */
 .galerie { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .8rem; margin: 1.5rem 0; }

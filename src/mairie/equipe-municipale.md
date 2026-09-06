@@ -9,10 +9,15 @@ fil: [{ "titre": "Mairie", "url": "/mairie/renseignements/" }]
 ## Le maire et les adjoints
 
 <div class="equipe">
-  <div class="equipe__carte"><div class="equipe__nom">David Boussard</div><div class="equipe__role">Maire</div></div>
+  <div class="equipe__carte"><div class="equipe__nom">David Boussard</div><div class="equipe__role">Maire — agriculteur, élu en mars 2026</div></div>
   <div class="equipe__carte"><div class="equipe__nom">À compléter</div><div class="equipe__role">1ᵉʳ adjoint·e</div></div>
   <div class="equipe__carte"><div class="equipe__nom">À compléter</div><div class="equipe__role">2ᵉ adjoint·e</div></div>
 </div>
+
+## Les maires précédents
+
+- **Maryse Bollengier** — 2001 à 2026
+- **Alexis Cordin** — 1971 à 2001
 
 ## Les conseillers municipaux
 
