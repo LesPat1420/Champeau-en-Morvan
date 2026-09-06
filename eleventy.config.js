@@ -12,7 +12,6 @@ module.exports = function (eleventyConfig) {
   // Passthrough : fichiers copiés tels quels vers le site généré
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "src/documents": "documents" });
-  eleventyConfig.addPassthroughCopy({ "src/admin": "admin" });
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
 
   eleventyConfig.addWatchTarget("src/assets/");

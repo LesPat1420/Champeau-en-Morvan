@@ -1,7 +1,7 @@
 {
-  "name": "site-mairie-saint-agnan-en-morvan",
+  "name": "site-mairie-champeau-en-morvan",
   "version": "1.0.0",
-  "description": "Site officiel de la commune de Saint-Agnan-en-Morvan (Nièvre)",
+  "description": "Site de la commune de Champeau-en-Morvan (Côte-d'Or)",
   "license": "MIT",
   "private": true,
   "scripts": {
