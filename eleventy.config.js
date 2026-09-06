@@ -13,6 +13,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "src/documents": "documents" });
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
+  // Interface d'administration (application autonome, copiée telle quelle)
+  eleventyConfig.addPassthroughCopy({ "src/admin": "admin" });
 
   eleventyConfig.addWatchTarget("src/assets/");
 

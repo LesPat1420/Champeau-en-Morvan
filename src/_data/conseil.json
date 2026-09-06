@@ -1,0 +1,15 @@
+{
+  "mandat": "2026-2032",
+  "maire": { "nom": "David Boussard", "info": "Agriculteur — élu en mars 2026" },
+  "adjoints": [
+    { "nom": "", "role": "1ᵉʳ adjoint" },
+    { "nom": "", "role": "2ᵉ adjoint" }
+  ],
+  "conseillers": [],
+  "commissions": [],
+  "anciens": [
+    { "nom": "Maryse Bollengier", "periode": "2001 – 2026" },
+    { "nom": "Alexis Cordin", "periode": "1971 – 2001" }
+  ],
+  "note": "Le conseil municipal complet sera renseigné par la mairie."
+}

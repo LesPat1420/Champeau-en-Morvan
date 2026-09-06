@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Espace de gestion — Champeau-en-Morvan</title>
+<style>
+  :root{
+    --bleu:#1f5d8c; --bleu-fonce:#163f5f; --bleu-clair:#eaf2f8;
+    --vert:#5c7f4f; --vert-fonce:#41623a;
+    --pierre:#f6f4ef; --bordure:#e2ddd2;
+    --texte:#23272b; --doux:#5b6570; --blanc:#fff;
+    --rouge:#9c3b28; --ambre:#b8860b;
+    --rayon:10px; --ombre:0 1px 3px rgba(22,63,95,.12),0 8px 24px rgba(22,63,95,.08);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;color:var(--texte);background:var(--pierre);font-size:15px;line-height:1.55}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--bleu-fonce);line-height:1.2}
+  a{color:var(--bleu)}
+  button{font:inherit;cursor:pointer}
+  input,select,textarea{font:inherit;width:100%;padding:.6rem .7rem;border:1px solid var(--bordure);border-radius:8px;background:#fff;color:inherit}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--ambre);outline-offset:1px;border-color:var(--bleu)}
+  label{display:block;font-weight:600;font-size:.9rem;margin:0 0 .35rem}
+  .champ{margin-bottom:1.1rem}
+  .aide{font-weight:400;color:var(--doux);font-size:.82rem;margin-top:.3rem}
+  .btn{display:inline-flex;align-items:center;gap:.45rem;padding:.62rem 1.1rem;border:1px solid transparent;border-radius:999px;font-weight:600;font-size:.92rem;text-decoration:none}
+  .btn--p{background:var(--vert);color:#fff}
+  .btn--p:hover{background:var(--vert-fonce)}
+  .btn--s{background:#fff;color:var(--bleu);border-color:var(--bleu)}
+  .btn--s:hover{background:var(--bleu-clair)}
+  .btn--danger{background:#fff;color:var(--rouge);border-color:var(--rouge)}
+  .btn--ghost{background:transparent;color:var(--doux);border-color:var(--bordure)}
+  .pastille{display:inline-block;font-size:.74rem;font-weight:700;padding:.15rem .5rem;border-radius:999px}
+  .pastille--ok{background:#e3f1e1;color:var(--vert-fonce)}
+  .pastille--brouillon{background:#f3ede0;color:var(--ambre)}
+  .pastille--info{background:var(--bleu-clair);color:var(--bleu-fonce)}
+
+  /* ---------- Connexion ---------- */
+  #login{min-height:100vh;display:grid;place-items:center;padding:1.5rem;
+    background:linear-gradient(135deg,var(--bleu-fonce),var(--vert))}
+  .login-carte{background:#fff;border-radius:16px;box-shadow:var(--ombre);width:min(400px,100%);padding:2.2rem 2rem}
+  .login-blason{width:56px;height:56px;border-radius:12px;background:var(--bleu-fonce);color:#fff;display:grid;place-items:center;font-family:Georgia,serif;font-size:2rem;margin:0 auto .9rem}
+  .login-carte h1{text-align:center;font-size:1.35rem;margin:0 0 .2rem}
+  .login-carte .sous{text-align:center;color:var(--doux);font-size:.9rem;margin:0 0 1.6rem}
+  .demo-bandeau{background:var(--ambre);color:#3a2c04;text-align:center;font-size:.82rem;font-weight:600;padding:.4rem;border-radius:8px;margin-bottom:1.2rem}
+
+  /* ---------- Appli ---------- */
+  #app{display:none;min-height:100vh;grid-template-columns:250px 1fr;grid-template-rows:auto 1fr}
+  .topbar{grid-column:1/-1;display:flex;align-items:center;gap:1rem;padding:.6rem 1.2rem;background:#fff;border-bottom:1px solid var(--bordure)}
+  .topbar .marque{display:flex;align-items:center;gap:.55rem;font-weight:700;color:var(--bleu-fonce)}
+  .topbar .blason{width:30px;height:30px;border-radius:7px;background:var(--bleu-fonce);color:#fff;display:grid;place-items:center;font-family:Georgia,serif}
+  .topbar .droite{margin-left:auto;display:flex;align-items:center;gap:.8rem;font-size:.88rem}
+  .topbar .user{color:var(--doux)}
+
+  .nav{background:#fff;border-right:1px solid var(--bordure);padding:.8rem .6rem;overflow-y:auto}
+  .nav a{display:flex;align-items:center;gap:.6rem;padding:.55rem .7rem;border-radius:8px;text-decoration:none;color:var(--texte);font-size:.92rem;font-weight:500}
+  .nav a .ic{width:1.15rem;text-align:center;flex:none;opacity:.8}
+  .nav a:hover{background:var(--pierre)}
+  .nav a.actif{background:var(--bleu-clair);color:var(--bleu-fonce);font-weight:700}
+  .nav .titre{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--doux);margin:1rem .7rem .3rem;font-weight:700}
+
+  .contenu{padding:1.6rem 2rem;overflow-y:auto}
+  .vue{display:none}
+  .vue.actif{display:block}
+  .fil{color:var(--doux);font-size:.85rem;margin-bottom:.3rem}
+  .vue > h2{font-size:1.5rem;margin:0 0 .3rem}
+  .vue > .intro{color:var(--doux);margin:0 0 1.4rem;max-width:60ch}
+  .barre-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.2rem}
+
+  .grille{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+  .carte{background:#fff;border:1px solid var(--bordure);border-radius:var(--rayon);padding:1.1rem 1.2rem}
+  .carte h3{margin:.1rem 0 .5rem;font-size:1.05rem}
+  .stat{font-size:2rem;font-family:Georgia,serif;color:var(--bleu)}
+  .carte p{margin:.2rem 0 0;color:var(--doux);font-size:.88rem}
+
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--bordure);border-radius:var(--rayon);overflow:hidden}
+  th,td{text-align:left;padding:.7rem .9rem;border-bottom:1px solid var(--bordure);font-size:.9rem}
+  th{background:var(--pierre);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--doux)}
+  tr:last-child td{border-bottom:0}
+  td .lien-action{color:var(--bleu);text-decoration:none;font-weight:600;margin-right:.8rem;font-size:.85rem}
+  td .lien-action.suppr{color:var(--rouge)}
+
+  .panneau{background:#fff;border:1px solid var(--bordure);border-radius:var(--rayon);padding:1.4rem 1.5rem;max-width:720px}
+  .panneau h3{margin-top:0}
+  .deux-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 1.2rem}
+  .depot{border:2px dashed var(--bordure);border-radius:10px;padding:1.4rem;text-align:center;color:var(--doux);background:var(--pierre);font-size:.88rem}
+  .form-pied{display:flex;gap:.6rem;margin-top:1.3rem;padding-top:1.1rem;border-top:1px solid var(--bordure)}
+
+  .mediatheque{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+  .media{background:#fff;border:1px solid var(--bordure);border-radius:10px;overflow:hidden}
+  .media .vignette{aspect-ratio:4/3;background:var(--bleu-clair);display:grid;place-items:center;color:var(--bleu);font-size:1.6rem}
+  .media .nom{padding:.45rem .6rem;font-size:.78rem;color:var(--doux);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .switch{display:flex;align-items:center;gap:.6rem}
+  .switch input{width:auto}
+
+  .toast{position:fixed;right:1.2rem;bottom:1.2rem;background:var(--bleu-fonce);color:#fff;padding:.8rem 1.1rem;border-radius:10px;box-shadow:var(--ombre);font-size:.9rem;opacity:0;transform:translateY(10px);transition:.25s;z-index:50}
+  .toast.montre{opacity:1;transform:none}
+
+  .rappel-demo{background:#fff8e6;border:1px solid #e8d9a8;color:#6b551a;font-size:.83rem;padding:.55rem .9rem;border-radius:8px;margin-bottom:1.3rem}
+
+  @media(max-width:820px){
+    #app{grid-template-columns:1fr}
+    .nav{position:fixed;inset:52px 0 0 0;z-index:40;transform:translateX(-100%);transition:.2s;width:250px}
+    .nav.ouvert{transform:none}
+    .burger{display:inline-grid!important}
+    .deux-cols{grid-template-columns:1fr}
+  }
+  .burger{display:none;place-items:center;width:34px;height:34px;border:1px solid var(--bordure);border-radius:8px;background:#fff}
+</style>
+</head>
+<body>
+
+<!-- ============ CONNEXION ============ -->
+<section id="login">
+  <form class="login-carte" onsubmit="entrer(event)">
+    <div class="login-blason">C</div>
+    <h1>Champeau-en-Morvan</h1>
+    <p class="sous">Espace de gestion du site communal</p>
+    <div class="demo-bandeau">⚠️ Démonstration — n'enregistre rien</div>
+    <div class="champ">
+      <label for="id">Identifiant</label>
+      <input id="id" type="text" placeholder="mairie" autocomplete="username">
+    </div>
+    <div class="champ">
+      <label for="mdp">Mot de passe</label>
+      <input id="mdp" type="password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn btn--p" style="width:100%;justify-content:center" type="submit">Se connecter</button>
+    <p class="aide" style="text-align:center;margin-top:1rem">Pour la démo : n'importe quel identifiant et mot de passe.</p>
+  </form>
+</section>
+
+<!-- ============ APPLICATION ============ -->
+<div id="app">
+  <div class="topbar">
+    <button class="burger" onclick="document.querySelector('.nav').classList.toggle('ouvert')">☰</button>
+    <span class="marque"><span class="blason">C</span> Gestion du site</span>
+    <div class="droite">
+      <a href="../" target="_blank" rel="noopener">Voir le site ↗</a>
+      <span class="user">Mairie ·</span>
+      <a href="#" onclick="sortir();return false">Déconnexion</a>
+    </div>
+  </div>
+
+  <nav class="nav" id="nav"></nav>
+
+  <main class="contenu" id="contenu"></main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------------------------------------------------------
+   DÉMO — aucune donnée réelle, aucun enregistrement.
+   --------------------------------------------------------------- */
+
+const MENU = [
+  {g:"Contenu", items:[
+    {id:"tableau", ic:"▤", label:"Tableau de bord"},
+    {id:"actus", ic:"📰", label:"Actualités"},
+    {id:"agenda", ic:"📅", label:"Agenda / Événements"},
+    {id:"pages", ic:"📄", label:"Pages du site"},
+    {id:"mediatheque", ic:"🖼️", label:"Médiathèque"},
+  ]},
+  {g:"Vie municipale", items:[
+    {id:"conseil", ic:"🏛️", label:"Comptes rendus & délibérations"},
+    {id:"bulletins", ic:"📗", label:"Bulletins municipaux"},
+    {id:"elus", ic:"👥", label:"Élus & commissions"},
+  ]},
+  {g:"Réglages", items:[
+    {id:"alerte", ic:"📢", label:"Bandeau d'alerte"},
+    {id:"coordonnees", ic:"📍", label:"Coordonnées & horaires"},
+    {id:"services", ic:"🗑️", label:"Déchèterie & services"},
+    {id:"parametres", ic:"⚙️", label:"Paramètres"},
+  ]},
+];
+
+/* Données bidon */
+const D = {
+  actus:[
+    {t:"Vœux du maire pour la nouvelle année", d:"2026-01-06", s:"Publié"},
+    {t:"Coupure d'électricité programmée le 18 mars", d:"2026-03-10", s:"Publié"},
+    {t:"Réouverture de la déchèterie aux horaires d'été", d:"2026-04-01", s:"Publié"},
+    {t:"Fête communale : appel aux bénévoles", d:"2026-06-12", s:"Brouillon"},
+  ],
+  agenda:[
+    {t:"Conseil municipal", d:"2026-09-19", l:"Mairie", h:"20 h 00"},
+    {t:"Repas des aînés", d:"2026-10-11", l:"Salle communale", h:"12 h 00"},
+    {t:"Cérémonie du 11 novembre", d:"2026-11-11", l:"Monument aux morts", h:"11 h 00"},
+  ],
+  pages:[
+    {t:"Accueil", maj:"2026-08-30"},
+    {t:"La commune", maj:"2026-09-01"},
+    {t:"Histoire & patrimoine", maj:"2026-09-01"},
+    {t:"Vie associative", maj:"2026-08-28"},
+    {t:"Tourisme & randonnée", maj:"2026-09-02"},
+    {t:"Situation géographique", maj:"2026-08-20"},
+  ],
+  conseil:[
+    {t:"Compte rendu du conseil du 4 juillet 2026", d:"2026-07-04", f:"CR-2026-07-04.pdf"},
+    {t:"Compte rendu du conseil du 9 mai 2026", d:"2026-05-09", f:"CR-2026-05-09.pdf"},
+    {t:"Compte rendu du conseil du 14 mars 2026", d:"2026-03-14", f:"CR-2026-03-14.pdf"},
+  ],
+  bulletins:[
+    {t:"Bulletin municipal n° 12 — été 2026", d:"2026-07-01", f:"bulletin-12.pdf"},
+    {t:"Bulletin municipal n° 11 — hiver 2025", d:"2025-12-15", f:"bulletin-11.pdf"},
+  ],
+  elus:[
+    {n:"David Boussard", r:"Maire"},
+    {n:"—", r:"1ᵉʳ adjoint"},
+    {n:"—", r:"2ᵉ adjoint"},
+    {n:"—", r:"Conseiller municipal"},
+    {n:"—", r:"Conseiller municipal"},
+  ],
+};
+
+const F = (iso)=>{const [y,m,d]=iso.split("-");const mo=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];return `${+d} ${mo[+m-1]} ${y}`};
+
+/* ---------- Connexion ---------- */
+function entrer(e){e.preventDefault();document.getElementById("login").style.display="none";document.getElementById("app").style.display="grid";construireNav();aller("tableau");}
+function sortir(){document.getElementById("app").style.display="none";document.getElementById("login").style.display="grid";}
+
+/* ---------- Navigation ---------- */
+function construireNav(){
+  const nav=document.getElementById("nav");
+  nav.innerHTML = MENU.map(sec=>
+    `<div class="titre">${sec.g}</div>` +
+    sec.items.map(it=>`<a href="#${it.id}" data-vue="${it.id}" onclick="aller('${it.id}');return false"><span class="ic">${it.ic}</span>${it.label}</a>`).join("")
+  ).join("");
+}
+function aller(id){
+  document.querySelectorAll(".nav a").forEach(a=>a.classList.toggle("actif",a.dataset.vue===id));
+  document.querySelector(".nav").classList.remove("ouvert");
+  document.getElementById("contenu").innerHTML = (VUES[id]||VUES.tableau)();
+  document.getElementById("contenu").scrollTop=0;
+}
+
+/* ---------- Faux enregistrement ---------- */
+function faux(msg){
+  const t=document.getElementById("toast");
+  t.textContent = msg || "Démonstration : modification non enregistrée";
+  t.classList.add("montre");
+  clearTimeout(faux._t); faux._t=setTimeout(()=>t.classList.remove("montre"),2600);
+}
+const rappel = `<div class="rappel-demo">Ceci est une maquette de présentation. Les boutons « Enregistrer », « Publier » et « Téléverser » n'ont pas d'effet.</div>`;
+
+/* ---------- Vues ---------- */
+const VUES = {};
+
+VUES.tableau = ()=>`
+  <div class="fil">Champeau-en-Morvan</div>
+  <h2>Tableau de bord</h2>
+  <p class="intro">Bienvenue dans l'espace de gestion du site. Vous pouvez modifier les pages, publier des actualités, mettre en ligne les comptes rendus du conseil et gérer les informations pratiques.</p>
+  ${rappel}
+  <div class="grille">
+    <div class="carte"><h3>Actualités</h3><div class="stat">${D.actus.length}</div><p>dont 1 brouillon</p></div>
+    <div class="carte"><h3>Événements à venir</h3><div class="stat">${D.agenda.length}</div><p>prochain : ${F(D.agenda[0].d)}</p></div>
+    <div class="carte"><h3>Comptes rendus</h3><div class="stat">${D.conseil.length}</div><p>dernier : ${F(D.conseil[0].d)}</p></div>
+    <div class="carte"><h3>Pages du site</h3><div class="stat">${D.pages.length}</div><p>+ 10 autres pages</p></div>
+  </div>
+  <h3 style="margin-top:2rem">Raccourcis</h3>
+  <div class="barre-actions">
+    <button class="btn btn--p" onclick="aller('actus')">＋ Nouvelle actualité</button>
+    <button class="btn btn--s" onclick="aller('conseil')">＋ Ajouter un compte rendu</button>
+    <button class="btn btn--s" onclick="aller('agenda')">＋ Ajouter un événement</button>
+    <button class="btn btn--s" onclick="aller('alerte')">Activer le bandeau d'alerte</button>
+  </div>`;
+
+VUES.actus = ()=>`
+  <div class="fil">Contenu</div>
+  <h2>Actualités</h2>
+  <p class="intro">Les actualités s'affichent sur la page d'accueil et dans la rubrique « Actualités » du site.</p>
+  <div class="barre-actions"><button class="btn btn--p" onclick="formActu()">＋ Nouvelle actualité</button></div>
+  <table>
+    <thead><tr><th>Titre</th><th>Date</th><th>Statut</th><th></th></tr></thead>
+    <tbody>${D.actus.map(a=>`<tr>
+      <td>${a.t}</td><td>${F(a.d)}</td>
+      <td><span class="pastille ${a.s==='Publié'?'pastille--ok':'pastille--brouillon'}">${a.s}</span></td>
+      <td style="text-align:right;white-space:nowrap">
+        <a class="lien-action" href="#" onclick="formActu('${a.t.replace(/'/g,"\\'")}');return false">Modifier</a>
+        <a class="lien-action suppr" href="#" onclick="faux('Suppression simulée');return false">Supprimer</a>
+      </td></tr>`).join("")}</tbody>
+  </table>`;
+
+function formActu(titre){
+  document.getElementById("contenu").innerHTML = `
+  <div class="fil"><a href="#" onclick="aller('actus');return false">Actualités</a></div>
+  <h2>${titre?"Modifier une actualité":"Nouvelle actualité"}</h2>
+  ${rappel}
+  <div class="panneau">
+    <div class="champ"><label>Titre</label><input type="text" value="${titre||""}" placeholder="Titre de l'actualité"></div>
+    <div class="deux-cols">
+      <div class="champ"><label>Date de publication</label><input type="date" value="2026-09-07"></div>
+      <div class="champ"><label>Statut</label><select><option>Publié</option><option>Brouillon</option></select></div>
+    </div>
+    <div class="champ"><label>Résumé <span class="aide">(1 à 2 phrases, affiché dans la liste)</span></label><textarea rows="2"></textarea></div>
+    <div class="champ"><label>Contenu</label><textarea rows="9" placeholder="Texte de l'actualité…"></textarea>
+      <p class="aide">Mise en forme simple : **gras**, *italique*, listes, liens.</p></div>
+    <div class="champ"><label>Image de une</label><div class="depot">Glissez une image ici ou <a href="#" onclick="faux('Sélecteur de fichier (démo)');return false">choisissez un fichier</a></div></div>
+    <div class="form-pied">
+      <button class="btn btn--p" onclick="faux('Actualité publiée (démo)')">Publier</button>
+      <button class="btn btn--s" onclick="faux('Brouillon enregistré (démo)')">Enregistrer le brouillon</button>
+      <button class="btn btn--ghost" onclick="aller('actus')">Annuler</button>
+    </div>
+  </div>`;
+}
+
+VUES.agenda = ()=>`
+  <div class="fil">Contenu</div>
+  <h2>Agenda / Événements</h2>
+  <p class="intro">Les événements alimentent l'agenda du site et peuvent être annoncés en actualité.</p>
+  <div class="barre-actions"><button class="btn btn--p" onclick="formEvt()">＋ Ajouter un événement</button></div>
+  <table>
+    <thead><tr><th>Événement</th><th>Date</th><th>Heure</th><th>Lieu</th><th></th></tr></thead>
+    <tbody>${D.agenda.map(e=>`<tr><td>${e.t}</td><td>${F(e.d)}</td><td>${e.h}</td><td>${e.l}</td>
+      <td style="text-align:right"><a class="lien-action" href="#" onclick="formEvt('${e.t.replace(/'/g,"\\'")}');return false">Modifier</a>
+      <a class="lien-action suppr" href="#" onclick="faux('Suppression simulée');return false">Supprimer</a></td></tr>`).join("")}</tbody>
+  </table>`;
+
+function formEvt(titre){
+  document.getElementById("contenu").innerHTML=`
+  <div class="fil"><a href="#" onclick="aller('agenda');return false">Agenda</a></div>
+  <h2>${titre?"Modifier l'événement":"Nouvel événement"}</h2>
+  ${rappel}
+  <div class="panneau">
+    <div class="champ"><label>Intitulé</label><input type="text" value="${titre||""}"></div>
+    <div class="deux-cols">
+      <div class="champ"><label>Date</label><input type="date"></div>
+      <div class="champ"><label>Heure</label><input type="time"></div>
+    </div>
+    <div class="champ"><label>Lieu</label><input type="text" placeholder="Salle communale, mairie, monument aux morts…"></div>
+    <div class="champ"><label>Description</label><textarea rows="5"></textarea></div>
+    <div class="switch champ"><input type="checkbox" id="ev-actu"><label for="ev-actu" style="margin:0">Créer aussi une actualité pour annoncer l'événement</label></div>
+    <div class="form-pied">
+      <button class="btn btn--p" onclick="faux('Événement ajouté (démo)')">Enregistrer</button>
+      <button class="btn btn--ghost" onclick="aller('agenda')">Annuler</button>
+    </div>
+  </div>`;
+}
+
+VUES.pages = ()=>`
+  <div class="fil">Contenu</div>
+  <h2>Pages du site</h2>
+  <p class="intro">Modifiez le texte des pages permanentes du site (présentation, histoire, vie associative…).</p>
+  <table>
+    <thead><tr><th>Page</th><th>Dernière modification</th><th></th></tr></thead>
+    <tbody>${D.pages.map(p=>`<tr><td>${p.t}</td><td>${F(p.maj)}</td>
+      <td style="text-align:right"><a class="lien-action" href="#" onclick="editPage('${p.t.replace(/'/g,"\\'")}');return false">Modifier</a>
+      <a class="lien-action" href="../" target="_blank" rel="noopener">Voir ↗</a></td></tr>`).join("")}</tbody>
+  </table>`;
+
+function editPage(titre){
+  document.getElementById("contenu").innerHTML=`
+  <div class="fil"><a href="#" onclick="aller('pages');return false">Pages du site</a></div>
+  <h2>Modifier : ${titre}</h2>
+  ${rappel}
+  <div class="panneau" style="max-width:820px">
+    <div class="champ"><label>Titre de la page</label><input type="text" value="${titre}"></div>
+    <div class="champ"><label>Chapô <span class="aide">(phrase d'introduction sous le titre)</span></label><textarea rows="2"></textarea></div>
+    <div class="champ"><label>Contenu</label>
+      <div style="border:1px solid var(--bordure);border-radius:8px;overflow:hidden">
+        <div style="background:var(--pierre);border-bottom:1px solid var(--bordure);padding:.4rem .6rem;font-size:.85rem;color:var(--doux)">
+          <b>B</b> &nbsp; <i>I</i> &nbsp; H2 &nbsp; H3 &nbsp; • Liste &nbsp; 🔗 Lien &nbsp; 🖼️ Image &nbsp; 🗂️ Tableau
+        </div>
+        <textarea rows="14" style="border:0;border-radius:0" placeholder="Contenu de la page…">Champeau-en-Morvan est une commune rurale du Haut-Morvan, en Côte-d'Or…</textarea>
+      </div>
+    </div>
+    <div class="form-pied">
+      <button class="btn btn--p" onclick="faux('Page enregistrée (démo)')">Enregistrer</button>
+      <button class="btn btn--s" onclick="faux('Aperçu (démo)')">Aperçu</button>
+      <button class="btn btn--ghost" onclick="aller('pages')">Annuler</button>
+    </div>
+  </div>`;
+}
+
+function tableauDocs(cle, titreVue, intro, labelBtn){
+  return `
+  <div class="fil">Vie municipale</div>
+  <h2>${titreVue}</h2>
+  <p class="intro">${intro}</p>
+  <div class="barre-actions"><button class="btn btn--p" onclick="formDoc('${cle}','${labelBtn}')">＋ ${labelBtn}</button></div>
+  <table>
+    <thead><tr><th>Intitulé</th><th>Date</th><th>Fichier</th><th></th></tr></thead>
+    <tbody>${D[cle].map(x=>`<tr><td>${x.t}</td><td>${F(x.d)}</td><td><span class="pastille pastille--info">PDF</span> ${x.f}</td>
+      <td style="text-align:right"><a class="lien-action" href="#" onclick="faux('Remplacement du fichier (démo)');return false">Remplacer</a>
+      <a class="lien-action suppr" href="#" onclick="faux('Suppression simulée');return false">Supprimer</a></td></tr>`).join("")}</tbody>
+  </table>`;
+}
+VUES.conseil = ()=>tableauDocs("conseil","Comptes rendus & délibérations","Mettez en ligne les comptes rendus et procès-verbaux des séances du conseil municipal. Ils apparaissent dans la rubrique « Mairie » du site.","Ajouter un compte rendu");
+VUES.bulletins = ()=>tableauDocs("bulletins","Bulletins municipaux","Publiez le bulletin municipal au format PDF. Les habitants peuvent le télécharger depuis le site.","Ajouter un bulletin");
+
+function formDoc(cle,label){
+  document.getElementById("contenu").innerHTML=`
+  <div class="fil"><a href="#" onclick="aller('${cle}');return false">Retour</a></div>
+  <h2>${label}</h2>
+  ${rappel}
+  <div class="panneau">
+    <div class="champ"><label>Intitulé</label><input type="text" placeholder="Compte rendu du conseil du …"></div>
+    <div class="champ"><label>Date de la séance</label><input type="date" style="max-width:220px"></div>
+    <div class="champ"><label>Fichier PDF</label><div class="depot">Glissez le PDF ici ou <a href="#" onclick="faux('Sélecteur de fichier (démo)');return false">choisissez un fichier</a><br><span class="aide">Format accepté : PDF — 10 Mo maximum</span></div></div>
+    <div class="form-pied">
+      <button class="btn btn--p" onclick="faux('Document mis en ligne (démo)')">Mettre en ligne</button>
+      <button class="btn btn--ghost" onclick="aller('${cle}')">Annuler</button>
+    </div>
+  </div>`;
+}
+
+VUES.elus = ()=>`
+  <div class="fil">Vie municipale</div>
+  <h2>Élus & commissions</h2>
+  <p class="intro">La liste des élus alimente la page « Équipe municipale ».</p>
+  <div class="barre-actions"><button class="btn btn--p" onclick="faux('Ajout d\\'un élu (démo)')">＋ Ajouter un élu</button></div>
+  <table>
+    <thead><tr><th>Nom</th><th>Fonction</th><th></th></tr></thead>
+    <tbody>${D.elus.map(e=>`<tr>
+      <td><input type="text" value="${e.n}" style="max-width:280px"></td>
+      <td><input type="text" value="${e.r}" style="max-width:240px"></td>
+      <td style="text-align:right"><a class="lien-action suppr" href="#" onclick="faux('Suppression simulée');return false">Retirer</a></td></tr>`).join("")}</tbody>
+  </table>
+  <div class="form-pied" style="border:0"><button class="btn btn--p" onclick="faux('Liste des élus enregistrée (démo)')">Enregistrer la liste</button></div>`;
+
+VUES.mediatheque = ()=>`
+  <div class="fil">Contenu</div>
+  <h2>Médiathèque</h2>
+  <p class="intro">Toutes les images et documents déposés sur le site.</p>
+  <div class="barre-actions"><button class="btn btn--p" onclick="faux('Téléversement (démo)')">⬆ Téléverser un fichier</button></div>
+  <div class="mediatheque">
+    ${["village-etang.jpg","mairie.jpg","entree-commune.jpg","plechage.jpg","eglise.jpg","conseil-2026.jpg","fete-communale.jpg","bulletin-12.pdf"].map(n=>`
+      <div class="media"><div class="vignette">${n.endsWith(".pdf")?"📄":"🖼️"}</div><div class="nom">${n}</div></div>`).join("")}
+  </div>`;
+
+VUES.alerte = ()=>`
+  <div class="fil">Réglages</div>
+  <h2>Bandeau d'alerte</h2>
+  <p class="intro">Affiche un bandeau bien visible en haut de toutes les pages (fermeture de la mairie, alerte météo, coupure d'eau…).</p>
+  ${rappel}
+  <div class="panneau">
+    <div class="switch champ"><input type="checkbox" id="al-on"><label for="al-on" style="margin:0">Afficher le bandeau sur le site</label></div>
+    <div class="champ"><label>Titre (en gras)</label><input type="text" placeholder="Mairie fermée"></div>
+    <div class="champ"><label>Message</label><textarea rows="3" placeholder="La mairie sera exceptionnellement fermée le vendredi 12 septembre."></textarea></div>
+    <div class="champ"><label>Lien « En savoir plus » <span class="aide">(facultatif)</span></label><input type="text" placeholder="/actualites/…"></div>
+    <div class="form-pied"><button class="btn btn--p" onclick="faux('Bandeau mis à jour (démo)')">Enregistrer</button></div>
+  </div>`;
+
+VUES.coordonnees = ()=>`
+  <div class="fil">Réglages</div>
+  <h2>Coordonnées & horaires</h2>
+  <p class="intro">Ces informations apparaissent dans le pied de page, sur la page « Renseignements » et sur la page de contact.</p>
+  ${rappel}
+  <div class="panneau">
+    <div class="deux-cols">
+      <div class="champ"><label>Adresse</label><input type="text" value="Le Village"></div>
+      <div class="champ"><label>Code postal et commune</label><input type="text" value="21210 Champeau-en-Morvan"></div>
+      <div class="champ"><label>Téléphone</label><input type="text" value="03 80 64 10 76"></div>
+      <div class="champ"><label>Courriel</label><input type="email" value="mairie.champeauenmorvan@wanadoo.fr"></div>
+    </div>
+    <div class="champ"><label>Horaires d'ouverture</label><textarea rows="3">Lundi : 15 h 30 – 18 h 30
+Mercredi : 9 h – 12 h</textarea></div>
+    <div class="deux-cols">
+      <div class="champ"><label>Maire</label><input type="text" value="David Boussard"></div>
+      <div class="champ"><label>Mandat</label><input type="text" value="2026 – 2032"></div>
+    </div>
+    <div class="form-pied"><button class="btn btn--p" onclick="faux('Coordonnées enregistrées (démo)')">Enregistrer</button></div>
+  </div>`;
+
+VUES.services = ()=>`
+  <div class="fil">Réglages</div>
+  <h2>Déchèterie & services</h2>
+  <p class="intro">Horaires d'été et d'hiver de la déchèterie. Le site bascule automatiquement au bon horaire selon la saison et affiche « ouvert / fermé » en temps réel.</p>
+  ${rappel}
+  <div class="panneau">
+    <div class="deux-cols">
+      <div class="champ"><label>Gestionnaire</label><input type="text" value="Communauté de communes de Saulieu-Morvan"></div>
+      <div class="champ"><label>Téléphone</label><input type="text" value="03 80 64 77 44"></div>
+    </div>
+    <div class="champ"><label>Horaires d'été (1ᵉʳ avril – 30 septembre)</label><textarea rows="4">Lundi, mardi, vendredi : 14 h – 19 h
+Mercredi, jeudi, samedi : 9 h – 12 h</textarea></div>
+    <div class="champ"><label>Horaires d'hiver (1ᵉʳ octobre – 31 mars)</label><textarea rows="4">Lundi, mardi, vendredi : 14 h – 17 h
+Mercredi, jeudi : 9 h – 12 h
+Samedi : 9 h – 12 h et 14 h – 17 h</textarea></div>
+    <div class="form-pied"><button class="btn btn--p" onclick="faux('Horaires enregistrés (démo)')">Enregistrer</button></div>
+  </div>`;
+
+VUES.parametres = ()=>`
+  <div class="fil">Réglages</div>
+  <h2>Paramètres</h2>
+  <p class="intro">Réglages généraux du site.</p>
+  ${rappel}
+  <div class="panneau">
+    <div class="champ"><label>Nom du site</label><input type="text" value="Commune de Champeau-en-Morvan"></div>
+    <div class="champ"><label>Description (référencement Google)</label><textarea rows="2">Site de la commune de Champeau-en-Morvan (21210), en Côte-d'Or, au cœur du Parc naturel régional du Morvan.</textarea></div>
+    <div class="champ"><label>Image de partage (réseaux sociaux)</label><div class="depot">village-etang.jpg — <a href="#" onclick="faux('Changer l\\'image (démo)');return false">changer</a></div></div>
+    <h3 style="margin-top:1.8rem;font-size:1rem">Comptes</h3>
+    <table><thead><tr><th>Identifiant</th><th>Rôle</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>mairie</td><td>Administrateur</td><td style="text-align:right"><a class="lien-action" href="#" onclick="faux('Modifier le mot de passe (démo)');return false">Mot de passe</a></td></tr>
+        <tr><td>secretariat</td><td>Rédacteur</td><td style="text-align:right"><a class="lien-action suppr" href="#" onclick="faux('Suppression simulée');return false">Retirer</a></td></tr>
+      </tbody>
+    </table>
+    <div class="form-pied"><button class="btn btn--s" onclick="faux('Ajout d\\'un compte (démo)')">＋ Ajouter un compte</button></div>
+  </div>`;
+
+</script>
+</body>
+</html>
